@@ -21,15 +21,6 @@ const TodoList = () => {
                 <Col span={8}>
                     <TodoItem />
                 </Col>
-                <Col span={8}>
-                    <TodoItem />
-                </Col>
-                <Col span={8}>
-                    <TodoItem />
-                </Col>
-                <Col span={8}>
-                    <TodoItem />
-                </Col>
             </Row>
         </ContainerStyled>
     );
