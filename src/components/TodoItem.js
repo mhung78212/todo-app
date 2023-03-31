@@ -1,12 +1,14 @@
 import { CheckOutlined } from "@ant-design/icons";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons/lib/icons";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import { Typography } from "antd";
+import EditTodoModal from "../Modals/EditTodoModal";
+
 const { Title, Text } = Typography;
+
 const ContainerStyled = styled.div`
-    background-color: #b6b8d8;
     border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
@@ -28,28 +30,45 @@ const ButtonStyled = styled.button`
     cursor: pointer;
     font-size: 20px;
 `;
-const TodoItem = () => {
+const TodoItem = ({ todo, handleDelete }) => {
+    const [isOpenEditModal, setIsOpenEditModal] = useState(false);
+
     return (
-        <ContainerStyled>
+        <ContainerStyled
+            style={{ backgroundColor: todo.completed ? "#00C851" : "#33b5e5" }}
+        >
             <ContentStyled>
-                <Title level={5}>Learn Reactjs</Title>
-                <Text>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quis, numquam neque sint nulla sed reiciendis, pariatur
-                    laboriosam laborum dolorum blanditiis dolores minus labore
-                    repellat totam aperiam placeat. Similique, cupiditate
-                    provident!
-                </Text>
+                <Title style={{ color: "white" }} level={5}>
+                    {todo.title}
+                </Title>
+                <Text style={{ color: "white" }}>{todo.description}</Text>
             </ContentStyled>
             <IconStyled>
+                {todo.completed ? (
+                    <></>
+                ) : (
+                    <>
+                        <ButtonStyled>
+                            <EditOutlined
+                                style={{ color: "#ffbb33" }}
+                                onClick={() => setIsOpenEditModal(true)}
+                            />
+                        </ButtonStyled>
+                        <EditTodoModal
+                            isOpenEditModal={isOpenEditModal}
+                            setIsOpenEditModal={setIsOpenEditModal}
+                        />
+                        <ButtonStyled>
+                            <CheckOutlined style={{ color: "#007E33" }} />
+                        </ButtonStyled>
+                    </>
+                )}
+
                 <ButtonStyled>
-                    <EditOutlined style={{ color: "#271c6c" }} />
-                </ButtonStyled>
-                <ButtonStyled>
-                    <CheckOutlined style={{ color: "green" }} />
-                </ButtonStyled>
-                <ButtonStyled>
-                    <DeleteOutlined style={{ color: "red" }} />
+                    <DeleteOutlined
+                        style={{ color: "#ff4444" }}
+                        onClick={() => handleDelete(todo.id)}
+                    />
                 </ButtonStyled>
             </IconStyled>
         </ContainerStyled>
