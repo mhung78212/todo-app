@@ -2,6 +2,8 @@ import { Button, Select } from "antd";
 import React, { useState } from "react";
 import styled from "styled-components";
 import AddTodoModal from "../Modals/AddTodoModal";
+import { useDispatch } from "react-redux";
+import { filteredTodo } from "../Modals/TodoListReducer";
 
 const ContainerStyled = styled.div`
     display: flex;
@@ -12,21 +14,28 @@ const ContainerStyled = styled.div`
 
 const ControlItem = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const dispatch = useDispatch()
+    const handleFilter = (value) => {
+        dispatch(filteredTodo(value))
+    };
     return (
         <ContainerStyled>
             <Button type="primary" size="large" onClick={() => setIsOpen(true)}>
                 Add Task
             </Button>
             <AddTodoModal isOpen={isOpen} setIsOpen={setIsOpen} />
-            <Select defaultValue="All" size="large" style={{ width: 150 }}>
+            <Select
+                defaultValue="All"
+                size="large"
+                style={{ width: 150 }}
+                onChange={(value)=> handleFilter(value)}
+            >
                 <Select.Option value="All" label="All"></Select.Option>
                 <Select.Option
                     value="Incomplete"
-                    label="Incomplete"
                 ></Select.Option>
                 <Select.Option
                     value="Complete"
-                    label="Complete"
                 ></Select.Option>
             </Select>
         </ContainerStyled>

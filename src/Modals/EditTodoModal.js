@@ -1,24 +1,36 @@
 import { Form, Input, Modal } from "antd";
-import React from "react";
-
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { canelEditTodo, updateTodo } from "./TodoListReducer";
 
 const EditTodoModal = ({ isOpenEditModal, setIsOpenEditModal }) => {
+    const editTodo = useSelector((state) => state.todoList.editTodoItem);
     const [form] = Form.useForm();
+    useEffect(() => {
+        form.setFieldsValue(editTodo);
+    }, [editTodo, form]);
+    const dispatch = useDispatch();
     const handleCancel = () => {
+        dispatch(canelEditTodo());
         form.resetFields();
         setIsOpenEditModal(false);
     };
-    const handleEditButtonClick = () => {
+    const handleUpdateButtonClick = () => {
+        // console.log(editTodo);
+        // console.log(form.getFieldsValue());
+        dispatch(updateTodo(form.getFieldsValue()));
         form.resetFields();
         setIsOpenEditModal(false);
     };
+
     return (
         <>
             <Modal
                 title="Edit Task"
                 open={isOpenEditModal}
-                onOk={handleEditButtonClick}
+                onOk={handleUpdateButtonClick}
                 onCancel={handleCancel}
+                closable={handleCancel}
             >
                 <Form form={form} layout="vertical">
                     <Form.Item

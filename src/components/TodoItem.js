@@ -5,6 +5,8 @@ import styled from "styled-components";
 
 import { Typography } from "antd";
 import EditTodoModal from "../Modals/EditTodoModal";
+import { useDispatch } from "react-redux";
+import { completedTodo, deleteTodo, editTodo } from "../Modals/TodoListReducer";
 
 const { Title, Text } = Typography;
 
@@ -30,9 +32,18 @@ const ButtonStyled = styled.button`
     cursor: pointer;
     font-size: 20px;
 `;
-const TodoItem = ({ todo, handleDelete }) => {
+const TodoItem = ({ todo }) => {
     const [isOpenEditModal, setIsOpenEditModal] = useState(false);
-
+    const dispatch = useDispatch();
+    const handleDelete = (todoId) => {
+        dispatch(deleteTodo(todoId));
+    };
+    const handleEdit = (todoId) => {
+        dispatch(editTodo(todoId));
+    };
+    const handleCompleted = (todoId) => {
+        dispatch(completedTodo(todoId));
+    };
     return (
         <ContainerStyled
             style={{ backgroundColor: todo.completed ? "#00C851" : "#33b5e5" }}
@@ -51,7 +62,11 @@ const TodoItem = ({ todo, handleDelete }) => {
                         <ButtonStyled>
                             <EditOutlined
                                 style={{ color: "#ffbb33" }}
-                                onClick={() => setIsOpenEditModal(true)}
+                                onClick={() => {
+                                    setIsOpenEditModal(true);
+                                    handleEdit(todo.id);
+                                }}
+                                // handleEdit={handleEdit}
                             />
                         </ButtonStyled>
                         <EditTodoModal
@@ -59,7 +74,9 @@ const TodoItem = ({ todo, handleDelete }) => {
                             setIsOpenEditModal={setIsOpenEditModal}
                         />
                         <ButtonStyled>
-                            <CheckOutlined style={{ color: "#007E33" }} />
+                            <CheckOutlined style={{ color: "#007E33" }} 
+                                onClick={()=>handleCompleted(todo.id)}
+                            />
                         </ButtonStyled>
                     </>
                 )}
