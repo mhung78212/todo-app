@@ -1,6 +1,6 @@
 import { Col, Row } from "antd";
 import React from "react";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import TodoItem from "./TodoItem";
 import { todosRemainingSelector } from "../app/selectors";
@@ -12,12 +12,7 @@ const ContainerStyled = styled.div`
 `;
 
 const TodoList = () => {
-
     const todos = useSelector(todosRemainingSelector);
-    // const dispatch = useDispatch();
-    // const handleDelete = (todoId) => {
-    //     dispatch(deleteTodo(todoId));
-    // };
 
     return (
         <ContainerStyled>
@@ -25,7 +20,6 @@ const TodoList = () => {
                 {todos.map((todo) => (
                     <Col span={8} key={todo.id}>
                         <TodoItem todo={todo} />
-                        {/* <TodoItem todo={todo} handleDelete={handleDelete}/> */}
                     </Col>
                 ))}
             </Row>

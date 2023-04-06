@@ -1,7 +1,7 @@
 import { Form, Input, Modal } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { canelEditTodo, updateTodo } from "./TodoListReducer";
+import { canelEditTodo, updateTodo } from "../app/TodoListReducer";
 
 const EditTodoModal = ({ isOpenEditModal, setIsOpenEditModal }) => {
     const editTodo = useSelector((state) => state.todoList.editTodoItem);

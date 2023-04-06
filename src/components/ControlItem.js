@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import AddTodoModal from "../Modals/AddTodoModal";
 import { useDispatch } from "react-redux";
-import { filteredTodo } from "../Modals/TodoListReducer";
+import { filteredTodo } from "../app/TodoListReducer";
 
 const ContainerStyled = styled.div`
     display: flex;

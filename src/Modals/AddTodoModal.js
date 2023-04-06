@@ -2,7 +2,7 @@ import { Form, Input, Modal } from "antd";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { addTodo } from "./TodoListReducer";
+import { addTodo } from "../app/TodoListReducer";
 
 const AddTodoModal = ({ isOpen, setIsOpen }) => {
     const [form] = Form.useForm();
@@ -20,14 +20,6 @@ const AddTodoModal = ({ isOpen, setIsOpen }) => {
                 completed: false,
             }),
         );
-        // dispatch(
-        //     todoSlide.actions.addTodo({
-        //         id: uuidv4(),
-        //         title: form.getFieldsValue().title,
-        //         description: form.getFieldsValue().description,
-        //         completed: false,
-        //     }),
-        // );
         form.resetFields();
         setIsOpen(false);
     };

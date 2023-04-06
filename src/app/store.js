@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import todoListReducer from "../Modals/TodoListReducer";
+import TodoReducer from "./TodoListSlide";
+// import todoListReducer from "./TodoListReducer";
+
 
 export const store = configureStore({
     reducer: {
-        todoList: todoListReducer,
+        todoList: TodoReducer,
     },
 });

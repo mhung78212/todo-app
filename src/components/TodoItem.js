@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Typography } from "antd";
 import EditTodoModal from "../Modals/EditTodoModal";
 import { useDispatch } from "react-redux";
-import { completedTodo, deleteTodo, editTodo } from "../Modals/TodoListReducer";
+import { completedTodo, deleteTodo, editTodo } from "../app/TodoListReducer";
 
 const { Title, Text } = Typography;
 
