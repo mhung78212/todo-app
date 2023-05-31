@@ -1,8 +1,8 @@
 import { Form, Input, Modal } from "antd";
-import React from "react";
 import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { addTodo } from "../app/TodoListReducer";
+import { addTodo } from "../app/TodoListSlide";
+import { HANDLENAME, toastSuccess } from "../utils/helper";
 
 const AddTodoModal = ({ isOpen, setIsOpen }) => {
     const [form] = Form.useForm();
@@ -22,6 +22,8 @@ const AddTodoModal = ({ isOpen, setIsOpen }) => {
         );
         form.resetFields();
         setIsOpen(false);
+
+        toastSuccess(HANDLENAME.ADD)
     };
     return (
         <>

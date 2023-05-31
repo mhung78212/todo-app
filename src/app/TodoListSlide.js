@@ -1,25 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-const initialState = {
-    list: [
-        {
-            id: "1",
-            title: "Learn React",
-            description: "Learn React Description",
-            completed: true,
-        },
-        {
-            id: "2",
-            title: "Learn Redux",
-            description: "Learn Redux Description",
-            completed: false,
-        },
-    ],
-    editTodoItem: [],
-    status: "All",
+const fetchFromLocalStorage = () => {
+    let todos = localStorage.getItem("todos");
+    if (todos) {
+        return JSON.parse(localStorage.getItem("todos"));
+    } else {
+        return [];
+    }
 };
-
+const storeInLocalStorage = (data) => {
+    localStorage.setItem("todos", JSON.stringify(data));
+};
+const initialState = {
+    list: fetchFromLocalStorage(),
+    editTodoItem: [],
+    filteredStatus: "All",
+    todoListStatus: "idle",
+};
 const TodoSlide = createSlice({
     name: "todoList",
     initialState,
@@ -27,6 +24,7 @@ const TodoSlide = createSlice({
         addTodo: (state, action) => {
             const todo = action.payload;
             state.list.push(todo);
+            storeInLocalStorage(state.list);
         },
         deleteTodo: (state, action) => {
             const todoDelItem = state.list.map(
@@ -35,6 +33,7 @@ const TodoSlide = createSlice({
             if (todoDelItem) {
                 state.list.splice(todoDelItem, 1);
             }
+            storeInLocalStorage(state.list);
         },
         editTodo: (state, action) => {
             const currentTodoEdit =
@@ -56,6 +55,7 @@ const TodoSlide = createSlice({
                 }
                 return false;
             });
+            storeInLocalStorage(state.list);
 
             state.editTodoItem = null;
         },
@@ -67,9 +67,10 @@ const TodoSlide = createSlice({
                 }
                 return false;
             });
+            storeInLocalStorage(state.list);
         },
         filteredTodo: (state, action) => {
-            state.status = action.payload;
+            state.filteredStatus = action.payload;
         },
     },
 });
@@ -82,5 +83,5 @@ export const {
     filteredTodo,
     updateTodo,
 } = TodoSlide.actions;
-const TodoReducer = TodoSlide.reducer
+const TodoReducer = TodoSlide.reducer;
 export default TodoReducer;

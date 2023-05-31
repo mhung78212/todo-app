@@ -6,7 +6,10 @@ import styled from "styled-components";
 import { Typography } from "antd";
 import EditTodoModal from "../Modals/EditTodoModal";
 import { useDispatch } from "react-redux";
-import { completedTodo, deleteTodo, editTodo } from "../app/TodoListReducer";
+import { deleteTodo, editTodo } from "../app/TodoListReducer";
+import { completedTodo } from "../app/TodoListSlide";
+import { HANDLENAME, toastSuccess } from "../utils/helper";
+import Swal from "sweetalert2";
 
 const { Title, Text } = Typography;
 
@@ -32,17 +35,34 @@ const ButtonStyled = styled.button`
     cursor: pointer;
     font-size: 20px;
 `;
+
 const TodoItem = ({ todo }) => {
     const [isOpenEditModal, setIsOpenEditModal] = useState(false);
     const dispatch = useDispatch();
     const handleDelete = (todoId) => {
-        dispatch(deleteTodo(todoId));
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(deleteTodo(todoId));
+                toastSuccess(HANDLENAME.DELETE)
+            }
+          })
+    
+
     };
     const handleEdit = (todoId) => {
         dispatch(editTodo(todoId));
     };
     const handleCompleted = (todoId) => {
         dispatch(completedTodo(todoId));
+        toastSuccess(HANDLENAME.COMPLETE)
     };
     return (
         <ContainerStyled
@@ -74,8 +94,9 @@ const TodoItem = ({ todo }) => {
                             setIsOpenEditModal={setIsOpenEditModal}
                         />
                         <ButtonStyled>
-                            <CheckOutlined style={{ color: "#007E33" }} 
-                                onClick={()=>handleCompleted(todo.id)}
+                            <CheckOutlined
+                                style={{ color: "#007E33" }}
+                                onClick={() => handleCompleted(todo.id)}
                             />
                         </ButtonStyled>
                     </>

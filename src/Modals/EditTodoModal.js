@@ -2,6 +2,7 @@ import { Form, Input, Modal } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { canelEditTodo, updateTodo } from "../app/TodoListReducer";
+import { HANDLENAME, toastSuccess } from "../utils/helper";
 
 const EditTodoModal = ({ isOpenEditModal, setIsOpenEditModal }) => {
     const editTodo = useSelector((state) => state.todoList.editTodoItem);
@@ -21,6 +22,7 @@ const EditTodoModal = ({ isOpenEditModal, setIsOpenEditModal }) => {
         dispatch(updateTodo(form.getFieldsValue()));
         form.resetFields();
         setIsOpenEditModal(false);
+        toastSuccess(HANDLENAME.UPDATE)
     };
 
     return (

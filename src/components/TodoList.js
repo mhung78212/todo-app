@@ -13,7 +13,7 @@ const ContainerStyled = styled.div`
 
 const TodoList = () => {
     const todos = useSelector(todosRemainingSelector);
-
+    if (todos.length === 0) return <div></div>;
     return (
         <ContainerStyled>
             <Row style={{ rowGap: "20px" }}>
